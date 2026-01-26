@@ -30,3 +30,32 @@ resource "aws_subnet" "terraedge_private_subnet" {
     Name = "terraedge-private-subnet-${count.index + 1}"
   }
 }
+
+# Internet Gateway for public subnets (required for internet-facing ALB)
+resource "aws_internet_gateway" "terraedge_gw" {
+  vpc_id = aws_vpc.terraedge_vpc.id
+
+  tags = {
+    Name = "terraedge_gw"
+  }
+}
+
+resource "aws_route_table" "terraedge_route_table" {
+  vpc_id = aws_vpc.terraedge_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.terraedge_gw.id
+  }
+
+  tags = {
+    Name = "terraedge-route-table"
+  }
+}
+
+# Associate public subnets with public route table
+resource "aws_route_table_association" "terraedge_public_rta" {
+  count          = length(var.azs)
+  subnet_id      = aws_subnet.terraedge_public_subnet[count.index].id
+  route_table_id = aws_route_table.terraedge_route_table.id
+}

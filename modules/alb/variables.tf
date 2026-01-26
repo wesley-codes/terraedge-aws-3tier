@@ -7,3 +7,8 @@ variable "alb_sg" {
   description = "Security group ID for application load balancer"
   type        = string
 }
+
+variable "vpc_id" {
+  description = "VPC ID for the target group"
+  type        = string
+}
