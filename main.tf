@@ -26,3 +26,15 @@ module "security" {
   vpc_id = module.vpc.vpc_id
 
 }
+
+module "compute" {
+  source               = "./modules/compute"
+  public_subnet_ids    = module.vpc.public_subnet_ids
+  alb_target_group_arn = module.alb.target_group_arn
+  app_sg_id            = module.security.app_security_group_id
+  instance_type        = var.instance_type
+  key_name             = var.key_name
+  desired_capacity     = var.desired_capacity
+  min_size             = var.min_size
+  max_size             = var.max_size
+}

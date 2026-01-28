@@ -22,3 +22,13 @@ output "private_subnet_cidrs" {
   description = "List of private subnet CIDR blocks"
   value       = module.vpc.private_subnet_cidrs
 }
+
+output "alb_dns_name" {
+  description = "DNS name of the ALB"
+  value       = module.alb.alb_dns_name
+}
+
+output "asg_name" {
+  description = "Name of the Auto Scaling Group"
+  value       = module.compute.asg_name
+}
