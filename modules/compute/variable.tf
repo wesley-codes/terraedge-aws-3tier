@@ -19,10 +19,6 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "key_name" {
-  description = "EC2 key pair name"
-  type        = string
-}
 
 variable "desired_capacity" {
   description = "Desired number of instances"

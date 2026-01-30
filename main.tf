@@ -33,8 +33,16 @@ module "compute" {
   alb_target_group_arn = module.alb.target_group_arn
   app_sg_id            = module.security.app_security_group_id
   instance_type        = var.instance_type
-  key_name             = var.key_name
   desired_capacity     = var.desired_capacity
   min_size             = var.min_size
   max_size             = var.max_size
+}
+
+module "rds" {
+  source                 = "./modules/rds"
+  private_subnetID_1     = module.vpc.private_subnet_ids[0]
+  private_subnetID_2     = module.vpc.private_subnet_ids[1]
+  db_passwd              = var.db_passwd
+  db_username            = var.db_username
+  vpc_security_group_ids = [module.security.rds_security_group_id]
 }

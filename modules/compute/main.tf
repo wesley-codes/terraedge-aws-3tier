@@ -19,22 +19,13 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_launch_template" "app_lt" {
-  name_prefix   = "terraedge-app-"
+  name_prefix   = "terraedge-app"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
-  key_name      = var.key_name
 
   vpc_security_group_ids = [var.app_sg_id]
 
-  user_data = base64encode(<<-EOF
-              #!/bin/bash
-              set -euxo pipefail
-              apt-get update -y
-              apt-get install -y nginx
-              systemctl enable --now nginx
-              echo "OK - terraedge app" > /var/www/html/index.html
-              EOF
-  )
+  user_data = base64encode(file("${path.module}/scripts/user-data.sh"))
 
   tag_specifications {
     resource_type = "instance"
