@@ -32,6 +32,7 @@ resource "aws_db_instance" "writer" {
   backup_retention_period   = 7
   skip_final_snapshot       = true
   final_snapshot_identifier = null
+  
 
 
 }
