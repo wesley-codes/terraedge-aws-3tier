@@ -46,3 +46,12 @@ module "rds" {
   db_username            = var.db_username
   vpc_security_group_ids = [module.security.rds_security_group_id]
 }
+
+module "acm_route53_waf" {
+  count        = var.enable_acm_route53_waf ? 1 : 0
+  source       = "./modules/acm_route53_waf"
+  domain_name  = var.domain_name
+  alb_dns_name = module.alb.alb_dns_name
+  alb_zone_id  = module.alb.alb_zone_id
+
+}

@@ -8,6 +8,11 @@ output "alb_dns_name" {
   value       = aws_lb.terraedge_alb.dns_name
 }
 
+output "alb_zone_id" {
+  description = "Route53 zone ID of the load balancer"
+  value       = aws_lb.terraedge_alb.zone_id
+}
+
 output "target_group_arn" {
   description = "ARN of the target group"
   value       = aws_lb_target_group.terraedge_tg.arn

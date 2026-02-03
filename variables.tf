@@ -50,3 +50,14 @@ variable "db_passwd" {
     error_message = "db_passwd must be at least 8 characters."
   }
 }
+
+variable "domain_name" {
+  description = "The domain name to use for the ACM certificate"
+  type        = string
+}
+
+variable "enable_acm_route53_waf" {
+  description = "Enable ACM/Route53/WAF module (requires a real hosted zone)"
+  type        = bool
+  default     = false
+}

@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "terraedge_tg" {
     timeout             = 5
     interval            = 30
     path                = "/"
-    matcher             = "200"
+    matcher             = "200-399"
   }
 
   tags = {
